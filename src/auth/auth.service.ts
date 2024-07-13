@@ -56,7 +56,7 @@ export class AuthService {
       UserName: req.username,
       Name: req.name,
       Surname: req.surname,
-      Phone: req.phoneNumber,
+      Phone: req.phone,
       Email: req.email,
       Roles: [Role.Admin],
       PasswordHashed: hashedPassword,

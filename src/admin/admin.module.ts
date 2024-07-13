@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
-import { IndexModule } from './index/index.module';
+import { AdminIndexModule } from './index/adminIndex.module';
+import { AdminCompanyOwnerModule } from './companyOwner/adminCompanyOwner.module';
+import { AdminCompanyModule } from './company/adminCompany.module';
 
 @Module({
-  imports: [IndexModule],
+  imports: [AdminIndexModule, AdminCompanyOwnerModule, AdminCompanyModule],
 })
 export class AdminModule {}

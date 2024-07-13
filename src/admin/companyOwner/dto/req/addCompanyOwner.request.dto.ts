@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, Length } from 'class-validator';
 
-export class RegisterRequestDto {
+export class AddCompanyOwnerRequestDto {
   @ApiProperty({
     description: 'User name',
-    example: 'testSuperAdmin',
+    example: 'testAdmin',
     required: true,
   })
   @IsString()
@@ -18,7 +18,7 @@ export class RegisterRequestDto {
   email: string;
   @ApiProperty({
     description: 'User password',
-    example: 'testSuperAdmin',
+    example: 'testAdmin',
     required: true,
   })
   @IsString()
@@ -45,10 +45,4 @@ export class RegisterRequestDto {
   })
   @Length(13, 13)
   phone: string;
-  @ApiProperty({
-    description: 'User agreement acceptance',
-    example: 'true',
-    required: true,
-  })
-  agreementAcceptance: boolean;
 }

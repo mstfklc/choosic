@@ -15,12 +15,12 @@ export class AuthController {
     return this.authService.registerAdmin(req);
   }
 
-  @Post('/login')
+  @Post('/login-admin')
   login(@Body() req: LoginRequest): Promise<LoginResponseDto> {
     return this.authService.loginAdmin(req);
   }
 
-  @Post('/login-company-owner')
+  @Post('/login-companyOwner')
   loginCompanyOwner(@Body() req: LoginRequest): Promise<LoginResponseDto> {
     return this.authService.loginCompanyOwner(req);
   }

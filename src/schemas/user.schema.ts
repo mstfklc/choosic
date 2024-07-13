@@ -31,6 +31,8 @@ export class User {
   IsActive: boolean;
   @Prop({ default: false })
   IsDeleted: boolean;
+  @Prop({ default: new Date() })
+  CreatedDate: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

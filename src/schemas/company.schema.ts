@@ -19,16 +19,28 @@ export class Company {
   UserId: User;
   @Prop({ required: true })
   CompanyName: string;
-  @Prop({ required: true })
+  @Prop({ required: false })
   Description: string;
-  @Prop({ required: true })
+  @Prop({ required: false })
+  Address: string;
+  @Prop({ required: false })
   MusicCategory: MusicCategoryEnum[];
-  @Prop({ required: true })
+  @Prop({ required: false })
   CompanyConcept: CompanyConceptEnum[];
-  @Prop({ required: true })
-  WorkTime: string;
+  @Prop({ required: false })
+  MidWeekWorkTime: string;
+  @Prop({ required: false })
+  SaturdayWorkTime: string;
+  @Prop({ required: false })
+  SundayWorkTime: string;
   @Prop({ required: false })
   CompanyImagePath: [string];
+  @Prop({ required: false })
+  SpotifyToken: string;
+  @Prop({ required: false })
+  SpotifyEmail: string;
+  @Prop({ required: false })
+  SpotifyPassword: string;
   @Prop({ required: false })
   Latitude: string;
   @Prop({ required: false })
@@ -39,6 +51,8 @@ export class Company {
   IsApproved: boolean;
   @Prop({ default: false })
   IsDeleted: boolean;
+  @Prop({ default: Date.now })
+  CreatedAt: Date;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
