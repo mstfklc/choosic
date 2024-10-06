@@ -11,4 +11,5 @@ export enum ApiErrorEnum {
   api_error_password_not_match = 14,
   api_error_company_already_exist = 15,
   api_error_company_not_found = 16,
+  api_error_username_already_exist = 17,
 }

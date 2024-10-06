@@ -10,6 +10,7 @@ import { ApiErrorEnum } from '../../enum/apiError.enum';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../../enum/role.enum';
 import { JwtService } from '@nestjs/jwt';
+import { AdminRegisterRequestDto } from './request/adminregisterRequest.dto';
 
 @Injectable()
 export class AdminAuthService {
@@ -43,6 +44,41 @@ export class AdminAuthService {
     }
     const jwtToken = this.jwtService.sign({
       id: admin._id,
+    });
+    return {
+      accessToken: jwtToken,
+    };
+  }
+
+  async create(
+    adminRequest: AdminRegisterRequestDto,
+  ): Promise<LoginResponseDto> {
+    const existingAdmin = await this.adminModel.findOne({
+      $or: [{ Username: adminRequest.Username }, { Email: adminRequest.Email }],
+    });
+
+    if (existingAdmin) {
+      if (existingAdmin.Username === adminRequest.Username) {
+        throwApiError(
+          CustomExceptionCode.CONFLICT,
+          ApiErrorEnum.api_error_username_already_exist,
+        );
+      } else if (existingAdmin.Email === adminRequest.Email) {
+        throwApiError(
+          CustomExceptionCode.CONFLICT,
+          ApiErrorEnum.api_error_email_already_exist,
+        );
+      }
+    }
+
+    const hashedPassword = await bcrypt.hash(adminRequest.Password, 10);
+
+    const createdAdmin = await this.adminModel.create({
+      ...adminRequest,
+      password: hashedPassword,
+    });
+    const jwtToken = this.jwtService.sign({
+      id: createdAdmin._id,
     });
     return {
       accessToken: jwtToken,
