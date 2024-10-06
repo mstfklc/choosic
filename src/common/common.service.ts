@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { UserTokensDto } from '../custom/jwt/dto/user-tokens.dto';
 import { TokenConfig, TokenConfigName } from '../config/token.config';
 import { randomBytes } from 'crypto';
@@ -25,9 +25,7 @@ export class CommonService {
     private configService: ConfigService,
   ) {}
 
-  async createTokens(
-    userId: Types.ObjectId,
-  ): Promise<UserTokensDto | undefined> {
+  async createTokens(userId: string): Promise<UserTokensDto | undefined> {
     const tokenConfig =
       this.configService.getOrThrow<TokenConfig>(TokenConfigName);
 
@@ -71,7 +69,7 @@ export class CommonService {
       );
     }
 
-    return this.createTokens(user._id);
+    return this.createTokens(user._id.toString());
   }
 
   async validateUser(req: LoginRequest): Promise<any> {
