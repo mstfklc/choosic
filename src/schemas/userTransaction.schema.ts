@@ -10,6 +10,7 @@ export type UserTransactionDocument = UserTransaction & Document;
   versionKey: false,
 })
 export class UserTransaction {
+  _id: mongoose.Schema.Types.ObjectId;
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

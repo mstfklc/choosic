@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { Role } from '../enum/role.enum';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
@@ -9,6 +9,7 @@ export type UserDocument = User & Document;
   versionKey: false,
 })
 export class User {
+  _id: mongoose.Schema.Types.ObjectId;
   @Prop({ required: true })
   Username: string;
   @Prop({ required: true })

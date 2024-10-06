@@ -78,7 +78,7 @@ export class AuthService {
     const user = await this.userModel.findOne({
       UserName: req.username,
       IsDeleted: false,
-      Roles: [Role.Admin],
+      Roles: Role.Admin,
       IsActive: true,
     });
     if (!user) {

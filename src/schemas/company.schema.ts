@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { MusicCategoryEnum } from '../enum/musicCategory.enum';
 import { CompanyConceptEnum } from '../enum/companyConcept.enum';
 
@@ -10,6 +10,7 @@ export type CompanyDocument = Company & Document;
   versionKey: false,
 })
 export class Company {
+  _id: mongoose.Schema.Types.ObjectId;
   /*@Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'CompanyOwner',
