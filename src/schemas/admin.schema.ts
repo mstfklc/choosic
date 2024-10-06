@@ -1,14 +1,14 @@
 import { Document } from 'mongoose';
-import { Role } from '../enum/role.enum';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Role } from '../enum/role.enum';
 
-export type UserDocument = User & Document;
+export type AdminDocument = Admin & Document;
 
 @Schema({
   timestamps: true,
   versionKey: false,
 })
-export class User {
+export class Admin {
   @Prop({ required: true })
   Username: string;
   @Prop({ required: true })
@@ -23,21 +23,13 @@ export class User {
   PasswordHashed: string;
   @Prop({
     required: true,
-    default: [Role.User],
+    default: [Role.Admin],
   })
   Roles: Role[];
   @Prop({ default: new Date() })
   CreatedDate: Date;
-  @Prop({ required: true })
-  AgreementAcceptance: boolean;
-  @Prop({ default: false })
-  IsPhoneConfirmed: boolean;
-  @Prop({ default: false })
-  IsMailConfirmed: boolean;
-  @Prop({ default: true })
-  IsActive: boolean;
   @Prop({ default: false })
   IsDeleted: boolean;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const AdminSchema = SchemaFactory.createForClass(Admin);

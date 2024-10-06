@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import { LoginResponseDto } from './dto/response/loginResponseDto';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterRequestDto } from './dto/request/registerRequestDto';
-import { throwApiError } from '../util/http.utility';
+import { throwApiError } from '../custom/http.utility';
 import { CustomExceptionCode } from '../enum/customExceptionCode.enum';
 import { ApiErrorEnum } from '../enum/apiError.enum';
 import * as bcrypt from 'bcrypt';

@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { throwApiError } from '../../../util/http.utility';
+import { throwApiError } from '../../http.utility';
 import { CustomExceptionCode } from '../../../enum/customExceptionCode.enum';
 import { ApiErrorEnum } from '../../../enum/apiError.enum';
 import { User } from '../../../schemas/user.schema';

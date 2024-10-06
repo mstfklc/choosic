@@ -5,7 +5,7 @@ import { Request } from 'express';
 import { User } from '../../../schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { throwApiError } from '../../../util/http.utility';
+import { throwApiError } from '../../http.utility';
 import { CustomExceptionCode } from '../../../enum/customExceptionCode.enum';
 import { ApiErrorEnum } from '../../../enum/apiError.enum';
 

@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 import { MusicCategoryEnum } from '../enum/musicCategory.enum';
 import { CompanyConceptEnum } from '../enum/companyConcept.enum';
-import { User } from './user.schema';
 
 export type CompanyDocument = Company & Document;
 
@@ -11,36 +10,38 @@ export type CompanyDocument = Company & Document;
   versionKey: false,
 })
 export class Company {
-  @Prop({
+  /*@Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'CompanyOwner',
     required: true,
   })
-  UserId: User;
+  CompanyOwnerId: CompanyOwner;*/
   @Prop({ required: true })
   CompanyName: string;
   @Prop({ required: false })
   Description: string;
   @Prop({ required: false })
-  Address: string;
+  CompanyConcept: CompanyConceptEnum[];
   @Prop({ required: false })
   MusicCategory: MusicCategoryEnum[];
   @Prop({ required: false })
-  CompanyConcept: CompanyConceptEnum[];
+  Address: string;
   @Prop({ required: false })
-  MidWeekWorkTime: string;
+  CompanyImagePath: [string];
+  @Prop({ required: false })
+  MondayWorkTime: string;
+  @Prop({ required: false })
+  TuesdayWorkTime: string;
+  @Prop({ required: false })
+  WednesdayWorkTime: string;
+  @Prop({ required: false })
+  ThursWorkTime: string;
+  @Prop({ required: false })
+  FridayWorkTime: string;
   @Prop({ required: false })
   SaturdayWorkTime: string;
   @Prop({ required: false })
   SundayWorkTime: string;
-  @Prop({ required: false })
-  CompanyImagePath: [string];
-  @Prop({ required: false })
-  SpotifyToken: string;
-  @Prop({ required: false })
-  SpotifyEmail: string;
-  @Prop({ required: false })
-  SpotifyPassword: string;
   @Prop({ required: false })
   Latitude: string;
   @Prop({ required: false })
@@ -48,9 +49,9 @@ export class Company {
   @Prop({ default: true })
   IsActive: boolean;
   @Prop({ default: false })
-  IsApproved: boolean;
-  @Prop({ default: false })
   IsDeleted: boolean;
+  @Prop({ default: false })
+  IsApproved: boolean;
   @Prop({ default: Date.now })
   CreatedAt: Date;
 }
