@@ -23,9 +23,9 @@ export class Admin {
   PasswordHashed: string;
   @Prop({
     required: true,
-    default: [Role.Admin],
+    default: Role.Admin,
   })
-  Roles: Role[];
+  Role: Role;
   @Prop({ default: new Date() })
   CreatedDate: Date;
   @Prop({ default: false })
