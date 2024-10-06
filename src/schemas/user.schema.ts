@@ -23,9 +23,9 @@ export class User {
   PasswordHashed: string;
   @Prop({
     required: true,
-    default: [Role.User],
+    default: Role.User,
   })
-  Roles: Role[];
+  Roles: Role;
   @Prop({ default: new Date() })
   CreatedDate: Date;
   @Prop({ required: true })
