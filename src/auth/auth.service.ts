@@ -24,9 +24,9 @@ export class AuthService {
     return this.userModel.findById(userId).exec();
   }
 
-  async registerAdmin(req: RegisterRequestDto): Promise<LoginResponseDto> {
+  async registerUser(req: RegisterRequestDto): Promise<LoginResponseDto> {
     const user = await this.userModel.findOne({
-      UserName: req.username,
+      UserName: req.Username,
       IsDeleted: false,
     });
     if (user) {
@@ -35,15 +35,15 @@ export class AuthService {
         ApiErrorEnum.api_error_user_already_exist,
       );
     }
-    if (req.agreementAcceptance !== true) {
+    if (req.AgreementAcceptance !== true) {
       throwApiError(
         CustomExceptionCode.BAD_REQUEST,
         ApiErrorEnum.api_error_agreement_not_accepted,
       );
     }
     const userEmail = await this.userModel.findOne({
-      Email: req.email,
-      IsDeleted: false,
+      Email: req.Email,
+      IsDeleted: true,
     });
     if (userEmail) {
       throwApiError(
@@ -51,23 +51,29 @@ export class AuthService {
         ApiErrorEnum.api_error_email_already_exist,
       );
     }
-    const hashedPassword = await bcrypt.hash(req.password, 10);
-    await this.userModel.create({
-      UserName: req.username,
-      Name: req.name,
-      Surname: req.surname,
-      Phone: req.phone,
-      Email: req.email,
-      Roles: [Role.Admin],
+    const hashedPassword = await bcrypt.hash(req.Password, 10);
+    const newUser = await this.userModel.create({
+      Username: req.Username,
+      Name: req.Name,
+      Surname: req.Surname,
+      Phone: req.Phone,
+      Email: req.Email,
+      Roles: Role.User,
       PasswordHashed: hashedPassword,
       AgreementAcceptance: true,
     });
     const findUser = await this.userModel.findOne({
-      UserName: req.username,
-      IsDeleted: false,
+      _id: newUser._id,
     });
+
+    if (!findUser) {
+      throwApiError(
+        CustomExceptionCode.API_ERROR,
+        ApiErrorEnum.api_error_user_not_found,
+      );
+    }
     const jwtToken = this.jwtService.sign({
-      id: findUser._id,
+      id: newUser._id,
     });
     return {
       accessToken: jwtToken,

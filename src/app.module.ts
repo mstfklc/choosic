@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GlobalJwtModule } from './custom/jwt/globalJwt.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AdminModule } from './admin/admin.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AdminModule } from './admin/admin.module';
     GlobalJwtModule,
     SpotifyModule,
     AdminModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

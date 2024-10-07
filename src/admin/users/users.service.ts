@@ -5,8 +5,14 @@ import mongoose from 'mongoose';
 
 @Injectable()
 export class UsersService {
+  async;
+
   constructor(
     @InjectModel(User.name)
     private userModel: mongoose.Model<User>,
   ) {}
+
+  async getUsersSpecificData(): Promise<Partial<User>[]> {
+    return this.userModel.find({}, { Username: 1, Email: 1 }).exec();
+  }
 }
