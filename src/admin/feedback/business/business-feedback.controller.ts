@@ -1,10 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { FeedbackBusiness } from '../../../schemas/feedback-business.schema';
 import { IdRequestDto } from '../../../globalDto/idRequestDto';
 import { BusinessFeedbackService } from './business-feedback.service';
 
 @Controller('business')
+@ApiTags('feedback')
 export class BusinessFeedbackController {
   constructor(private readonly feedbackService: BusinessFeedbackService) {}
 

@@ -14,12 +14,6 @@ export class ApplicationFeedbackService {
     return this.feedbackApplicationModel.find().exec();
   }
 
-  async getFeedbackByVersion(): Promise<FeedbackApplication[]> {
-    return this.feedbackApplicationModel.find({
-      currentApplicationVersion: version,
-    });
-  }
-
   async getFeedbackByDate(
     startDate: Date,
     endDate: Date,

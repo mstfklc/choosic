@@ -13,14 +13,6 @@ export class ApplicationFeedbackController {
     return this.feedbackService.getAllFeedBack();
   }
 
-  @Post('by-version')
-  @ApiOkResponse({ type: [FeedbackApplication] })
-  async getFeedbackByVersion(
-    @Body('version') version: string,
-  ): Promise<FeedbackApplication[]> {
-    return this.feedbackService.getFeedbackByVersion(version);
-  }
-
   @Post('by-date')
   @ApiOkResponse({ type: [FeedbackApplication] })
   async getFeedbackByDate(
