@@ -16,11 +16,9 @@ export class FeedbackService {
     private readonly feedbackApplicationModel: Model<FeedbackApplication>,
   ) {}
 
-  async getFeedBackBusiness(
-    idRequestDto: IdRequestDto,
-  ): Promise<FeedbackBusinessDto[]> {
+  async getFeedBackBusiness(req: IdRequestDto): Promise<FeedbackBusinessDto[]> {
     const feedbacks = await this.feedbackBusinessModel
-      .find({ _id: idRequestDto.id })
+      .find({ _id: req.id })
       .select('UserId Message CreatedAt')
       .exec();
 
@@ -32,13 +30,13 @@ export class FeedbackService {
   }
 
   async getFeedbackBusinessByDate(
-    idRequestDto: IdRequestDto,
+    req: IdRequestDto,
     startDate: Date,
     endDate: Date,
   ): Promise<FeedbackBusinessDto[]> {
     const feedbacks = await this.feedbackBusinessModel
       .find({
-        _id: idRequestDto.id,
+        _id: req.id,
         sentAt: { $gte: startDate, $lte: endDate },
       })
       .select('UserId Message CreatedAt')
