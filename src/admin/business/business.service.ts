@@ -35,4 +35,19 @@ export class BusinessService {
       CreatedDate: company.CreatedAt,
     };
   }
+
+  async deleteCompany(idRequestDto: IdRequestDto): Promise<any> {
+    const { id } = idRequestDto;
+
+    const company = await this.companyModel.findById(id).exec();
+
+    if (!company) {
+      throwApiError(
+        CustomExceptionCode.NOT_FOUND,
+        ApiErrorEnum.api_error_company_not_found,
+      );
+    }
+
+    return this.companyModel.findByIdAndDelete(id).exec();
+  }
 }

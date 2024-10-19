@@ -12,4 +12,8 @@ export enum ApiErrorEnum {
   api_error_company_already_exist = 15,
   api_error_company_not_found = 16,
   api_error_username_already_exist = 17,
+  api_error_company_not_updated = 18,
+  api_error_companyOwner_not_found = 19,
+  api_error_companyStaff_not_found = 20,
+  api_error_playlist_not_found = 21,
 }
