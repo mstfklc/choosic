@@ -19,8 +19,7 @@ export class FeedbackApplication {
   Title: string;
   @Prop({ required: true })
   Message: string;
-  @Prop({ required: true })
-  CurrentApplicationVersion: string;
+
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Admin',

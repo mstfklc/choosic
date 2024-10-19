@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { FeedbackApplication } from '../../../schemas/feedbackApplication.schema';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { FeedbackApplicationDto } from '../dto/feedback.application.dto';
 
 @Controller('application-feedback')
 @ApiTags('feedback')
@@ -8,17 +8,17 @@ export class ApplicationFeedbackController {
   private feedbackService: any;
 
   @Get()
-  @ApiOkResponse({ type: [FeedbackApplication] })
-  async getAllFeedback(): Promise<FeedbackApplication[]> {
+  @ApiOkResponse({ type: [FeedbackApplicationDto] })
+  async getAllFeedback(): Promise<FeedbackApplicationDto[]> {
     return this.feedbackService.getAllFeedBack();
   }
 
   @Post('by-date')
-  @ApiOkResponse({ type: [FeedbackApplication] })
+  @ApiOkResponse({ type: [FeedbackApplicationDto] })
   async getFeedbackByDate(
     @Body('startDate') startDate: Date,
     @Body('endDate') endDate?: Date,
-  ): Promise<FeedbackApplication[]> {
+  ): Promise<FeedbackApplicationDto[]> {
     const end = endDate || new Date();
     return this.feedbackService.getFeedbackByDate(startDate, end);
   }
