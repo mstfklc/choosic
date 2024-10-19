@@ -32,7 +32,7 @@ export class BusinessService {
     return {
       CompanyName: company.CompanyName,
       CompanyImagePath: company.CompanyImagePath,
-      CreatedDate: company.CreatedDate,
+      CreatedDate: company.CreatedAt,
     };
   }
 }

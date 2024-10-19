@@ -9,7 +9,7 @@ export class BusinessDetailDto {
   })
   @IsString()
   @IsNotEmpty()
-  CompanyImagePath: string;
+  CompanyImagePath: [string];
 
   @ApiProperty({
     description: 'Company name',
