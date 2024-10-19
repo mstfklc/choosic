@@ -16,9 +16,6 @@ export class FeedbackApplication {
 
   @Prop({ required: true })
   message: string;
-
-  @Prop({ required: true })
-  currentApplicationVersion: string;
 }
 
 export const FeedbackApplicationSchema =

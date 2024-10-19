@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ApplicationFeedbackService } from './application-feedback.service';
-import { ApplicationFeedbackController } from './application-feedback.controller';
+import { ApplicationFeedbackService } from './application.feedback.service';
+import { ApplicationFeedbackController } from './application.feedback.controller';
 
 @Module({
   providers: [ApplicationFeedbackService],
