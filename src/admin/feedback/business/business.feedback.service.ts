@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FeedbackBusiness } from '../../../schemas/feedback-business.schema';
+import { FeedbackBusiness } from '../../../schemas/feedback.business.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IdRequestDto } from '../../../globalDto/idRequestDto';

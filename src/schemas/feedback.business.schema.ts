@@ -21,5 +21,5 @@ export class FeedbackBusiness {
   message: string;
 }
 
-export const FeedBackBusinessSchema =
+export const FeedbackBusinessSchema =
   SchemaFactory.createForClass(FeedbackBusiness);
