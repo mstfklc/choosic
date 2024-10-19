@@ -225,6 +225,37 @@ export class PlaylistMusicService {
     return filteredSongs.map(this.mapToDto);
   }
 
+  async addSongToPlaylist(
+    companyId: string,
+    playlistId: string,
+    song: {
+      coverImage: string;
+      musicName: string;
+      artistName: string;
+    },
+  ): Promise<any> {
+    const playlist = this.playlists.find(
+      (pl) => pl.companyId === companyId && pl.id === parseInt(playlistId),
+    );
+
+    if (!playlist) {
+      throwApiError(
+        CustomExceptionCode.NOT_FOUND,
+        ApiErrorEnum.api_error_playlist_not_found,
+      );
+    }
+    const songExists = playlist.songs.some(
+      (existingSong: { musicName: string }) =>
+        existingSong.musicName === song.musicName,
+    );
+    if (songExists) {
+      throwApiError(
+        CustomExceptionCode.NOT_FOUND,
+        ApiErrorEnum.api_error_song_already_exist,
+      );
+    }
+  }
+
   async removeSongFromPlaylist(
     companyId: string,
     playlistId: string,
