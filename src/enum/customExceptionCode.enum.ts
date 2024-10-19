@@ -4,4 +4,5 @@ export enum CustomExceptionCode {
   UNAUTHORIZED = 401,
   CONFLICT = 409,
   NOT_FOUND = 404,
+  INTERNAL_SERVER_ERROR = 500,
 }

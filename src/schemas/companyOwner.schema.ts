@@ -12,11 +12,11 @@ export class CompanyOwner {
   _id: mongoose.Schema.Types.ObjectId;
   @Prop({ required: true })
   Username: string;
-  @Prop({ required: true })
+  @Prop({ required: false })
   Name: string;
-  @Prop({ required: true })
+  @Prop({ required: false })
   Surname: string;
-  @Prop({ required: true })
+  @Prop({ required: false })
   Phone: string;
   @Prop({ required: true })
   Email: string;
