@@ -20,7 +20,9 @@ export class BusinessService {
   ): Promise<BusinessDetailDto> {
     const { id } = idRequestDto;
 
-    const company = await this.companyModel.findById(id).exec();
+    const company = await this.companyModel
+      .findOne({ _id: id, isDeleted: false })
+      .exec();
 
     if (!company) {
       throwApiError(
@@ -39,7 +41,9 @@ export class BusinessService {
   async deleteCompany(idRequestDto: IdRequestDto): Promise<any> {
     const { id } = idRequestDto;
 
-    const company = await this.companyModel.findById(id).exec();
+    const company = await this.companyModel
+      .findOne({ _id: id, isDeleted: false })
+      .exec();
 
     if (!company) {
       throwApiError(
@@ -48,6 +52,9 @@ export class BusinessService {
       );
     }
 
-    return this.companyModel.findByIdAndDelete(id).exec();
+    return this.companyModel.updateOne(
+      { _id: id, isDeleted: false },
+      { $set: { isDeleted: true } },
+    );
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { throwApiError } from '../../custom/http.utility';
 import { CustomExceptionCode } from '../../enum/customExceptionCode.enum';
 import { ApiErrorEnum } from '../../enum/apiError.enum';
+import { SongsResponseDto } from './dto/response/song.response.dto';
 
 @Injectable()
 export class PlaylistMusicService {
@@ -103,6 +104,69 @@ export class PlaylistMusicService {
     },
   ];
 
+  private songs: any[] = [
+    {
+      id: '1',
+      coverImage: 'https://example.com/song1.jpg',
+      musicName: 'Song A',
+      artistName: 'Artist A',
+    },
+    {
+      id: '2',
+      coverImage: 'https://example.com/song2.jpg',
+      musicName: 'Song B',
+      artistName: 'Artist B',
+    },
+    {
+      id: '3',
+      coverImage: 'https://example.com/song3.jpg',
+      musicName: 'Song C',
+      artistName: 'Artist C',
+    },
+    {
+      id: '4',
+      coverImage: 'https://example.com/song4.jpg',
+      musicName: 'Song D',
+      artistName: 'Artist D',
+    },
+    {
+      id: '5',
+      coverImage: 'https://example.com/song5.jpg',
+      musicName: 'Song E',
+      artistName: 'Artist E',
+    },
+    {
+      id: '6',
+      coverImage: 'https://example.com/song6.jpg',
+      musicName: 'Song F',
+      artistName: 'Artist F',
+    },
+    {
+      id: '7',
+      coverImage: 'https://example.com/song7.jpg',
+      musicName: 'Song G',
+      artistName: 'Artist G',
+    },
+    {
+      id: '8',
+      coverImage: 'https://example.com/song8.jpg',
+      musicName: 'Song H',
+      artistName: 'Artist H',
+    },
+    {
+      id: '9',
+      coverImage: 'https://example.com/song9.jpg',
+      musicName: 'Song I',
+      artistName: 'Artist I',
+    },
+    {
+      id: '10',
+      coverImage: 'https://example.com/song10.jpg',
+      musicName: 'Song J',
+      artistName: 'Artist J',
+    },
+  ];
+
   async getPlaylistsByCompanyId(companyId: string): Promise<any[]> {
     return this.playlists.filter(
       (playlist) => playlist.companyId === companyId,
@@ -145,5 +209,48 @@ export class PlaylistMusicService {
         addedAt: song.addedAt,
       }),
     );
+  }
+
+  async searchSongsByName(name: string): Promise<SongsResponseDto[]> {
+    const filteredSongs = this.songs.filter((song) =>
+      song.musicName.toLowerCase().includes(name.toLowerCase()),
+    );
+    if (!filteredSongs) {
+      throwApiError(
+        CustomExceptionCode.NOT_FOUND,
+        ApiErrorEnum.api_error_song_not_found,
+      );
+    }
+
+    return filteredSongs.map(this.mapToDto);
+  }
+
+  async removeSongFromPlaylist(
+    companyId: string,
+    playlistId: string,
+    musicName: string,
+  ): Promise<any> {
+    const playlist = this.playlists.find(
+      (pl) => pl.companyId === companyId && pl.id === parseInt(playlistId),
+    );
+
+    if (!playlist) {
+      throwApiError(
+        CustomExceptionCode.NOT_FOUND,
+        ApiErrorEnum.api_error_playlist_not_found,
+      );
+    }
+
+    playlist.songs = playlist.songs.filter(
+      (song) => song.musicName !== musicName,
+    );
+  }
+
+  private mapToDto(song: any): SongsResponseDto {
+    return {
+      coverImage: song.coverImage,
+      musicName: song.musicName,
+      artistName: song.artistName,
+    };
   }
 }

@@ -16,4 +16,5 @@ export enum ApiErrorEnum {
   api_error_companyOwner_not_found = 19,
   api_error_companyStaff_not_found = 20,
   api_error_playlist_not_found = 21,
+  api_error_song_not_found = 22,
 }
