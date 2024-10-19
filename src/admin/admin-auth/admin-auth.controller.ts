@@ -8,15 +8,12 @@ import { AdminRegisterRequestDto } from './request/adminregisterRequest.dto';
 @Controller('admin')
 @ApiTags('admin')
 export class AdminAuthController {
-  constructor(
-    private authService: AdminAuthService,
-    private adminAuthService: AdminAuthService,
-  ) {}
+  constructor(private adminAuthService: AdminAuthService) {}
 
   @Post('/login')
   @ApiOkResponse({ type: LoginResponseDto })
   login(@Body() req: AdminLoginRequest): Promise<LoginResponseDto> {
-    return this.authService.login(req);
+    return this.adminAuthService.login(req);
   }
 
   @Post('/signup')

@@ -27,8 +27,8 @@ export class User {
     default: Role.User,
   })
   Roles: Role;
-  @Prop({ default: new Date() })
-  CreatedDate: Date;
+  @Prop({ default: Date.now })
+  CreatedAt: Date;
   @Prop({ required: true })
   AgreementAcceptance: boolean;
   @Prop({ default: false })
