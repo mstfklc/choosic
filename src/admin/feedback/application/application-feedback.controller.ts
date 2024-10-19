@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { FeedbackApplication } from '../../../schemas/feedback-application.schema';
+import { FeedbackApplication } from '../../../schemas/feedbackApplication.schema';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('application-feedback')

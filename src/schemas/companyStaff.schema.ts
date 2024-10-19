@@ -1,22 +1,16 @@
 import mongoose, { Document } from 'mongoose';
+import { Role } from '../enum/role.enum';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { User } from './user.schema';
 import { Company } from './company.schema';
 
-export type UserTransactionDocument = UserTransaction & Document;
+export type CompanyStaffDocument = CompanyStaff & Document;
 
 @Schema({
   timestamps: true,
   versionKey: false,
 })
-export class UserTransaction {
+export class CompanyStaff {
   _id: mongoose.Schema.Types.ObjectId;
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  })
-  UserId: User;
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
@@ -24,12 +18,20 @@ export class UserTransaction {
   })
   CompanyId: Company;
   @Prop({ required: true })
-  Price: number;
+  Username: string;
+  @Prop({ required: true })
+  PasswordHashed: string;
+  @Prop({
+    required: true,
+    default: Role.CompanyStaff,
+  })
+  Roles: Role;
   @Prop({ default: Date.now })
   CreatedAt: Date;
   @Prop({ default: true })
-  IsCompleted: boolean;
+  IsActive: boolean;
+  @Prop({ default: false })
+  IsDeleted: boolean;
 }
 
-export const UserTransactionSchema =
-  SchemaFactory.createForClass(UserTransaction);
+export const CompanyStaffSchema = SchemaFactory.createForClass(CompanyStaff);

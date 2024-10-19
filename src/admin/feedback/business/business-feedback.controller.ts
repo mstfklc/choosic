@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { FeedbackBusiness } from '../../../schemas/feedback-business.schema';
+import { FeedbackBusiness } from '../../../schemas/feedbackBusiness.schema';
 import { IdRequestDto } from '../../../globalDto/idRequestDto';
 import { BusinessFeedbackService } from './business-feedback.service';
 

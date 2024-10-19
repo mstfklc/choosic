@@ -4,6 +4,6 @@ import { BusinessController } from './business.controller';
 
 @Module({
   providers: [BusinessService],
-  controllers: [BusinessController]
+  controllers: [BusinessController],
 })
 export class BusinessModule {}

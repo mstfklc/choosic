@@ -1,22 +1,20 @@
-import mongoose, { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { User } from './user.schema';
+import mongoose from 'mongoose';
 import { Company } from './company.schema';
-
-export type UserTransactionDocument = UserTransaction & Document;
+import { User } from './user.schema';
 
 @Schema({
   timestamps: true,
-  versionKey: false,
+  versionKey: true,
 })
-export class UserTransaction {
+export class FeedbackBusiness {
   _id: mongoose.Schema.Types.ObjectId;
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    required: false,
   })
-  UserId: User;
+  UserId?: User;
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
@@ -24,12 +22,14 @@ export class UserTransaction {
   })
   CompanyId: Company;
   @Prop({ required: true })
-  Price: number;
+  Title: string;
+  @Prop({ required: true })
+  Message: string;
+  @Prop({ default: false })
+  IsCompanyVerified: boolean;
   @Prop({ default: Date.now })
   CreatedAt: Date;
-  @Prop({ default: true })
-  IsCompleted: boolean;
 }
 
-export const UserTransactionSchema =
-  SchemaFactory.createForClass(UserTransaction);
+export const FeedbackBusinessSchema =
+  SchemaFactory.createForClass(FeedbackBusiness);
