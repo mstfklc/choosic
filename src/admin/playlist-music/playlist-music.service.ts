@@ -3,6 +3,10 @@ import { throwApiError } from '../../custom/http.utility';
 import { CustomExceptionCode } from '../../enum/customExceptionCode.enum';
 import { ApiErrorEnum } from '../../enum/apiError.enum';
 import { SongsResponseDto } from './dto/response/song.response.dto';
+import { PlaylistSongsResponseDto } from './dto/response/playlist.songs.dto';
+import { PlaylistSongsRequestDTO } from './dto/request/playlist.songs.request.dto';
+import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
+import { RemoveSongsRequestDTO } from './dto/request/remove.song.request.dto';
 
 @Injectable()
 export class PlaylistMusicService {
@@ -182,11 +186,12 @@ export class PlaylistMusicService {
   }
 
   async getPlayListSongs(
-    companyId: string,
-    playlistId: string,
-  ): Promise<any[]> {
+    auth: AuthRequestDto,
+    req: PlaylistSongsRequestDTO,
+  ): Promise<PlaylistSongsResponseDto> {
     const playlist = this.playlists.find(
-      (pl) => pl.companyId === companyId && pl.id === parseInt(playlistId),
+      (pl) =>
+        pl.companyId === req.companyId && pl.id === parseInt(req.playlistId),
     );
 
     if (!playlist) {
@@ -195,8 +200,7 @@ export class PlaylistMusicService {
         ApiErrorEnum.api_error_playlist_not_found,
       );
     }
-
-    return playlist.songs.map(
+    const playListSongsMap = playlist.songs.map(
       (song: {
         coverImage: any;
         musicName: any;
@@ -209,20 +213,32 @@ export class PlaylistMusicService {
         addedAt: song.addedAt,
       }),
     );
+
+    return { items: playListSongsMap };
   }
 
-  async searchSongsByName(name: string): Promise<SongsResponseDto[]> {
+  async searchSongsByName(
+    auth: AuthRequestDto,
+    name: string,
+  ): Promise<SongsResponseDto> {
     const filteredSongs = this.songs.filter((song) =>
       song.musicName.toLowerCase().includes(name.toLowerCase()),
     );
-    if (!filteredSongs) {
+
+    if (!filteredSongs || filteredSongs.length === 0) {
       throwApiError(
         CustomExceptionCode.NOT_FOUND,
         ApiErrorEnum.api_error_song_not_found,
       );
     }
 
-    return filteredSongs.map(this.mapToDto);
+    const filteredSongMap = filteredSongs.map((song) => ({
+      coverImage: song.coverImage,
+      musicName: song.musicName,
+      artistName: song.artistName,
+    }));
+
+    return { items: filteredSongMap };
   }
 
   async addSongToPlaylist(
@@ -257,12 +273,12 @@ export class PlaylistMusicService {
   }
 
   async removeSongFromPlaylist(
-    companyId: string,
-    playlistId: string,
-    musicName: string,
+    auth: AuthRequestDto,
+    req: RemoveSongsRequestDTO,
   ): Promise<any> {
     const playlist = this.playlists.find(
-      (pl) => pl.companyId === companyId && pl.id === parseInt(playlistId),
+      (pl) =>
+        pl.companyId === req.companyId && pl.id === parseInt(req.playlistId),
     );
 
     if (!playlist) {
@@ -273,15 +289,7 @@ export class PlaylistMusicService {
     }
 
     playlist.songs = playlist.songs.filter(
-      (song) => song.musicName !== musicName,
+      (song: { musicName: string }) => song.musicName !== req.songName,
     );
-  }
-
-  private mapToDto(song: any): SongsResponseDto {
-    return {
-      coverImage: song.coverImage,
-      musicName: song.musicName,
-      artistName: song.artistName,
-    };
   }
 }

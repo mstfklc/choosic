@@ -1,7 +1,7 @@
-import { IsDateString, IsString } from 'class-validator';
+import { IsDate, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class PlayedsongsResponseDto {
+export class PlayedSongsResponse {
   @ApiProperty({
     description: 'Cover image',
     example: 'cover1.jpg',
@@ -27,6 +27,11 @@ export class PlayedsongsResponseDto {
     description: 'Date played',
     example: '2024-10-19T10:00:00',
   })
-  @IsDateString()
-  playedAt: string;
+  @IsDate()
+  playedAt: Date;
+}
+
+export class PlayedSongsResponseDto {
+  @ApiProperty({ type: () => [PlayedSongsResponse] })
+  items: PlayedSongsResponse[];
 }

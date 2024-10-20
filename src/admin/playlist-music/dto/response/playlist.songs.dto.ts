@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class PlaylistSongsResponseDto {
+export class PlaylistSongsResponse {
   @ApiProperty({
     description: 'Cover image of the music',
     example: 'https://example.com/image.jpg',
@@ -24,4 +24,9 @@ export class PlaylistSongsResponseDto {
     example: '2024-01-01T12:00:00',
   })
   addedAt: Date;
+}
+
+export class PlaylistSongsResponseDto {
+  @ApiProperty({ type: [PlaylistSongsResponse] })
+  items: PlaylistSongsResponse[];
 }

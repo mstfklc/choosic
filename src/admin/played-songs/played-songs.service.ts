@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PlayedsongsResponseDto } from './dto/response/playedsongs.response.dto';
+import { PlayedSongsResponseDto } from './dto/response/playedsongs.response.dto';
 import { PlayedSongsRequestDto } from './dto/request/playedsongs.request.dto';
 import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
 
@@ -35,7 +35,7 @@ export class PlayedSongsService {
   async getCustomRangeHistory(
     auth: AuthRequestDto,
     req: PlayedSongsRequestDto,
-  ): Promise<PlayedsongsResponseDto[]> {
+  ): Promise<PlayedSongsResponseDto> {
     const { companyId, startDate, endDate } = req;
 
     const start = new Date(startDate);
@@ -47,15 +47,13 @@ export class PlayedSongsService {
         music.playedAt <= end,
     );
 
-    return this.mapToDto(filteredSongs);
-  }
-
-  private mapToDto(musicHistory: any[]): PlayedsongsResponseDto[] {
-    return musicHistory.map((music) => ({
+    const filteredSongsMap = filteredSongs.map((music) => ({
       coverImage: music.coverImage,
       musicName: music.musicName,
       artistName: music.artistName,
       playedAt: music.playedAt,
     }));
+
+    return { items: filteredSongsMap };
   }
 }
