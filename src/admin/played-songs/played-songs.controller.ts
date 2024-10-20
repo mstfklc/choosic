@@ -3,8 +3,10 @@ import { PlayedSongsService } from './played-songs.service';
 import { PlayedSongsRequestDto } from './dto/request/playedsongs.request.dto';
 import { PlayedsongsResponseDto } from './dto/response/playedsongs.response.dto';
 import { IdRequestDto } from '../../globalDto/idRequestDto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('played-songs')
+@ApiTags('admin/played-songs')
 export class PlayedSongsController {
   constructor(private readonly playedSongsService: PlayedSongsService) {}
 

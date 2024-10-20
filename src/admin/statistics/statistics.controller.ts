@@ -3,8 +3,10 @@ import { IdRequestDto } from '../../globalDto/idRequestDto';
 import { StatisticsResponseDto } from './dto/response/statistics.response.dto';
 import { StatisticsRequestDto } from './dto/request/statistics.request.dto';
 import { StatisticsService } from './statistics.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('statistics')
+@ApiTags('admin/statistics')
 export class StatisticsController {
   constructor(private readonly statisticsService: StatisticsService) {}
 

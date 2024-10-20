@@ -10,7 +10,7 @@ import { CompanyOwnerInfoDto } from './dto/response/camponyowner.info.dto';
 import { CompanyStaffInfoDto } from './dto/response/companystaff.info.dto';
 
 @Controller('business/info')
-@ApiTags('business/info')
+@ApiTags('admin/business/info')
 export class InfoController {
   constructor(private readonly infoService: InfoService) {}
 

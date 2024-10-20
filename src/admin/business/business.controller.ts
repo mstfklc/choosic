@@ -29,7 +29,7 @@ import { MusicCategoryEnum } from '../../enum/musicCategory.enum';
 import { UpdateCompanyRequestDto } from './dto/request/updateCompanyRequest.dto';
 
 @ApiTags('admin')
-@Controller('business')
+@Controller('admin/business')
 export class BusinessController {
   constructor(private readonly businessService: BusinessService) {}
 

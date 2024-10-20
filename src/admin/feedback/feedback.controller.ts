@@ -5,7 +5,7 @@ import { IdRequestDto } from '../../globalDto/idRequestDto';
 import { FeedbackService } from './feedback.service';
 import { FeedbackApplicationDto } from './dto/feedback.application.dto';
 
-@ApiTags('feedback')
+@ApiTags('admin/feedback')
 @Controller('feedback')
 export class FeedbackController {
   constructor(private readonly feedbackService: FeedbackService) {}
