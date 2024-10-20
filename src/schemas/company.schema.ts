@@ -15,10 +15,10 @@ export class Company {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'CompanyOwner',
-    required: true,
+    required: false,
   })
   CompanyOwnerId: CompanyOwner;
-  @Prop({ required: true })
+  @Prop({ required: true, index: true })
   CompanyName: string;
   @Prop({ required: false })
   Description: string;
@@ -29,7 +29,7 @@ export class Company {
   @Prop({ required: false })
   Address: string;
   @Prop({ required: false })
-  CompanyImagePath: [string];
+  CompanyImagePath: string[];
   @Prop({ required: false })
   MondayWorkTime: string;
   @Prop({ required: false })
@@ -59,3 +59,4 @@ export class Company {
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
+CompanySchema.index({ CompanyName: 'text' });

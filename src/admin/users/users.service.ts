@@ -5,8 +5,6 @@ import mongoose from 'mongoose';
 
 @Injectable()
 export class UsersService {
-  async;
-
   constructor(
     @InjectModel(User.name)
     private userModel: mongoose.Model<User>,
