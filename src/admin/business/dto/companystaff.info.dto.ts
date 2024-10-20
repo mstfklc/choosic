@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class CompanyStaffInfoDto {
+export class CompanyStaffInfo {
   @IsString()
   id: string;
 
@@ -13,4 +13,9 @@ export class CompanyStaffInfoDto {
   @IsNotEmpty()
   @IsString()
   PasswordHashed: string;
+}
+
+export class CompanyStaffInfoDto {
+  @ApiProperty({ type: () => [CompanyStaffInfo] })
+  items: CompanyStaffInfo[];
 }

@@ -48,7 +48,7 @@ export class AccountsService {
 
   async getCompanyStaffInfo(
     idRequestDto: IdRequestDto,
-  ): Promise<CompanyStaffInfoDto[]> {
+  ): Promise<CompanyStaffInfoDto> {
     const { id } = idRequestDto;
     const companyStaffs = await this.companyStaffModel
       .find({ CompanyId: id })
@@ -61,10 +61,11 @@ export class AccountsService {
         ApiErrorEnum.api_error_companyStaff_not_found,
       );
     }
-    return companyStaffs.map((staff) => ({
+    const mapStaff = companyStaffs.map((staff) => ({
       id: staff.id.toString(),
       Username: staff.Username,
       PasswordHashed: staff.PasswordHashed,
     }));
+    return { items: mapStaff };
   }
 }
