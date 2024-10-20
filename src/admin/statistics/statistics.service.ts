@@ -31,64 +31,6 @@ export class StatisticsService {
     },
   ];
 
-  async getDailyStatistics(
-    companyId: string,
-  ): Promise<StatisticsResponseDto[]> {
-    const today = new Date();
-    const filteredStats = this.statisticsData.filter(
-      (stat) =>
-        stat.companyId === companyId &&
-        stat.date.toDateString() === today.toDateString(),
-    );
-
-    return this.mapToDto(filteredStats);
-  }
-
-  async getWeeklyStatistics(
-    companyId: string,
-  ): Promise<StatisticsResponseDto[]> {
-    const today = new Date();
-    const oneWeekAgo = new Date(today.setDate(today.getDate() - 7));
-    const filteredStats = this.statisticsData.filter(
-      (stat) =>
-        stat.companyId === companyId &&
-        stat.date > oneWeekAgo &&
-        stat.date <= new Date(),
-    );
-
-    return this.mapToDto(filteredStats);
-  }
-
-  async getMonthlyStatistics(
-    companyId: string,
-  ): Promise<StatisticsResponseDto[]> {
-    const today = new Date();
-    const oneMonthAgo = new Date(today.setMonth(today.getMonth() - 1));
-    const filteredStats = this.statisticsData.filter(
-      (stat) =>
-        stat.companyId === companyId &&
-        stat.date > oneMonthAgo &&
-        stat.date <= new Date(),
-    );
-
-    return this.mapToDto(filteredStats);
-  }
-
-  async getYearlyStatistics(
-    companyId: string,
-  ): Promise<StatisticsResponseDto[]> {
-    const today = new Date();
-    const oneYearAgo = new Date(today.setFullYear(today.getFullYear() - 1));
-    const filteredStats = this.statisticsData.filter(
-      (stat) =>
-        stat.companyId === companyId &&
-        stat.date > oneYearAgo &&
-        stat.date <= new Date(),
-    );
-
-    return this.mapToDto(filteredStats);
-  }
-
   async getCustomRangeStatistics(
     req: StatisticsRequestDto,
   ): Promise<StatisticsResponseDto[]> {

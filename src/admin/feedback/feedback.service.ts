@@ -6,6 +6,7 @@ import { FeedbackBusiness } from '../../schemas/feedbackBusiness.schema';
 import { Model } from 'mongoose';
 import { FeedbackApplicationDto } from './dto/feedback.application.dto';
 import { FeedbackApplication } from '../../schemas/feedbackApplication.schema';
+import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
 
 @Injectable()
 export class FeedbackService {
@@ -16,24 +17,30 @@ export class FeedbackService {
     private readonly feedbackApplicationModel: Model<FeedbackApplication>,
   ) {}
 
-  async getFeedBackBusiness(req: IdRequestDto): Promise<FeedbackBusinessDto[]> {
+  async getFeedBackBusiness(
+    auth: AuthRequestDto,
+    req: IdRequestDto,
+  ): Promise<FeedbackBusinessDto> {
     const feedbacks = await this.feedbackBusinessModel
       .find({ _id: req.id })
       .select('UserId Message CreatedAt')
       .exec();
 
-    return feedbacks.map((feedback) => ({
+    const feedbacksMap = feedbacks.map((feedback) => ({
       UserId: feedback.UserId?.toString(),
       Message: feedback.Message,
       CreatedAt: feedback.CreatedAt,
     }));
+
+    return { items: feedbacksMap };
   }
 
   async getFeedbackBusinessByDate(
+    auth: AuthRequestDto,
     req: IdRequestDto,
     startDate: Date,
     endDate: Date,
-  ): Promise<FeedbackBusinessDto[]> {
+  ): Promise<FeedbackBusinessDto> {
     const feedbacks = await this.feedbackBusinessModel
       .find({
         _id: req.id,
@@ -42,30 +49,38 @@ export class FeedbackService {
       .select('UserId Message CreatedAt')
       .exec();
 
-    return feedbacks.map((feedback) => ({
+    const feedbacksMap = feedbacks.map((feedback) => ({
       UserId: feedback.UserId?.toString(),
       Message: feedback.Message,
       CreatedAt: feedback.CreatedAt,
     }));
+
+    return { items: feedbacksMap };
   }
 
-  async getAllApplicationFeedBack(): Promise<FeedbackApplicationDto[]> {
+  async getAllApplicationFeedBack(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    auth: AuthRequestDto,
+  ): Promise<FeedbackApplicationDto> {
     const feedbacks = await this.feedbackApplicationModel
       .find()
       .select('UserId Message CreatedAt')
       .exec();
 
-    return feedbacks.map((feedback) => ({
+    const feedbacksMap = feedbacks.map((feedback) => ({
       UserId: feedback.UserId?.toString(),
       Message: feedback.Message,
       CreatedAt: feedback.CreatedAt,
     }));
+
+    return { items: feedbacksMap };
   }
 
   async getApplicationFeedbackByDate(
+    auth: AuthRequestDto,
     startDate: Date,
     endDate: Date,
-  ): Promise<FeedbackApplicationDto[]> {
+  ): Promise<FeedbackApplicationDto> {
     const feedbacks = await this.feedbackApplicationModel
       .find({
         sentAt: { $gte: startDate, $lte: endDate },
@@ -73,10 +88,12 @@ export class FeedbackService {
       .select('UserId Message CreatedAt')
       .exec();
 
-    return feedbacks.map((feedback) => ({
+    const feedbacksMap = feedbacks.map((feedback) => ({
       UserId: feedback.UserId?.toString(),
       Message: feedback.Message,
       CreatedAt: feedback.CreatedAt,
     }));
+
+    return { items: feedbacksMap };
   }
 }
