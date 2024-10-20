@@ -1,7 +1,7 @@
 import { IsMongoId, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class FeedbackApplicationDto {
+export class FeedbackApplication {
   @ApiProperty({
     description: 'User id',
     required: false,
@@ -22,4 +22,9 @@ export class FeedbackApplicationDto {
   })
   @IsString()
   CreatedAt: Date;
+}
+
+export class FeedbackApplicationDto {
+  @ApiProperty({ type: [FeedbackApplication] })
+  items: FeedbackApplication[];
 }

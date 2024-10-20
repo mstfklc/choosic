@@ -3,14 +3,14 @@ import { PlayedSongsService } from './played-songs.service';
 import { PlayedSongsRequestDto } from './dto/request/playedsongs.request.dto';
 import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
 import { PlayedSongsResponseDto } from './dto/response/playedsongs.response.dto';
-
-//import { IdRequestDto } from '../../globalDto/idRequestDto';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('played-songs')
 export class PlayedSongsController {
   constructor(private readonly playedSongsService: PlayedSongsService) {}
 
   @Get('custom-range')
+  @ApiOkResponse({ type: PlayedSongsResponseDto })
   async getCustomRangeHistory(
     @Req() auth: AuthRequestDto,
     @Body() req: PlayedSongsRequestDto,

@@ -4,8 +4,8 @@ import { BusinessDetailDto } from './dto/business.detail.dto';
 import { IdRequestDto } from '../../globalDto/idRequestDto';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
-import { ListAllCompanyResponseDto } from './response/listAllCompanyResponse.dto';
 import { SuccessResponseDto } from '../../globalDto/successResponseDto';
+import { ListAllCompanyResponseDto } from './response/listAllCompanyResponse.dto';
 
 @Controller('business')
 export class BusinessController {

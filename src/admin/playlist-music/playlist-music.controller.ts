@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Query,
   Req,
@@ -11,6 +12,14 @@ import { PlaylistMusicService } from './playlist-music.service';
 import { PlaylistSongsRequestDTO } from './dto/request/playlist.songs.request.dto';
 import { PlaylistSongsResponseDto } from './dto/response/playlist.songs.dto';
 import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+} from '@nestjs/swagger';
+import { RemoveSongsRequestDTO } from './dto/request/remove.song.request.dto';
+import { SongsResponseDto } from './dto/response/song.response.dto';
 
 @Controller('playlist-music')
 export class PlaylistMusicController {
@@ -21,15 +30,26 @@ export class PlaylistMusicController {
     return this.playlistMusicService.getPlaylistsByCompanyId(id);
   }
 
-  @Post('/create')
+  @Post('create')
+  @ApiOperation({ summary: 'Create a new playlist' })
+  @ApiParam({ name: 'companyId', description: 'ID of the company' })
+  @ApiBody({
+    schema: {
+      properties: {
+        name: { type: 'string' },
+        songs: { type: 'array', items: { type: 'string' } },
+      },
+    },
+  })
   async createPlaylist(
-    @Body() companyId: string,
+    @Param('companyId') companyId: string,
     @Body() newPlaylist: { name: string; songs: string[] },
   ) {
     return this.playlistMusicService.createPlaylist(companyId, newPlaylist);
   }
 
   @Get('/songs')
+  @ApiOkResponse({ type: PlaylistSongsResponseDto })
   async getPlaylistSongs(
     @Req() auth: AuthRequestDto,
     @Body() req: PlaylistSongsRequestDTO,
@@ -38,10 +58,11 @@ export class PlaylistMusicController {
   }
 
   @Get('/search')
+  @ApiOkResponse({ type: SongsResponseDto })
   async searchSong(
     @Req() auth: AuthRequestDto,
-    @Query('songName') songName: string,
-  ) {
+    @Query('songName') songName?: string,
+  ): Promise<SongsResponseDto> {
     return this.playlistMusicService.searchSongsByName(auth, songName);
   }
 
@@ -64,9 +85,10 @@ export class PlaylistMusicController {
   }
 
   @Delete('/song')
+  @ApiOkResponse({ description: 'Song deleted successfully' })
   async deleteSong(
     @Req() auth: AuthRequestDto,
-    @Body() req: PlaylistSongsRequestDTO,
+    @Body() req: RemoveSongsRequestDTO,
   ) {
     return this.playlistMusicService.removeSongFromPlaylist(auth, req);
   }
