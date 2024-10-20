@@ -22,13 +22,9 @@ export class AccountsService {
     private readonly companyStaffModel: Model<CompanyStaff>,
   ) {}
 
-  async getCompanyOwnerInfo(
-    idRequestDto: IdRequestDto,
-  ): Promise<CompanyOwnerInfoDto> {
-    const { id } = idRequestDto;
-
+  async getCompanyOwnerInfo(req: IdRequestDto): Promise<CompanyOwnerInfoDto> {
     const company = await this.companyModel
-      .findById(id)
+      .findById(req.id)
       .populate('CompanyOwnerId')
       .exec();
 
@@ -46,15 +42,10 @@ export class AccountsService {
     };
   }
 
-  async getCompanyStaffInfo(
-    idRequestDto: IdRequestDto,
-  ): Promise<CompanyStaffInfoDto> {
-    const { id } = idRequestDto;
+  async getCompanyStaffInfo(req: IdRequestDto): Promise<CompanyStaffInfoDto> {
     const companyStaffs = await this.companyStaffModel
-      .find({ CompanyId: id })
-      .select('_id Username PasswordHashed')
+      .find({ CompanyId: req.id })
       .exec();
-
     if (!companyStaffs) {
       throwApiError(
         CustomExceptionCode.NOT_FOUND,
