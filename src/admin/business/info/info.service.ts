@@ -15,10 +15,8 @@ export class InfoService {
     @InjectModel('Company.name') private companyModel: Model<Company>,
   ) {}
 
-  async getCompanyInfo(idRequestDto: IdRequestDto): Promise<BusinessInfoDto> {
-    const company = await this.companyModel
-      .findById({ id: idRequestDto.id })
-      .exec();
+  async getCompanyInfo(req: IdRequestDto): Promise<BusinessInfoDto> {
+    const company = await this.companyModel.findById({ id: req.id }).exec();
 
     return {
       Description: company.Description,
@@ -37,10 +35,10 @@ export class InfoService {
   }
 
   async updateBusinessInfo(
-    idRequestDto: IdRequestDto,
+    req: IdRequestDto,
     updateBusinessInfoDto: UpdateBusinessInfoDto,
   ): Promise<Company> {
-    const company = await this.companyModel.findById(idRequestDto.id).exec();
+    const company = await this.companyModel.findById(req.id).exec();
 
     if (!company) {
       throwApiError(
@@ -49,7 +47,7 @@ export class InfoService {
       );
     }
     const updatedCompany = await this.companyModel
-      .findByIdAndUpdate(idRequestDto.id, updateBusinessInfoDto)
+      .findByIdAndUpdate(req.id, updateBusinessInfoDto)
       .exec();
 
     if (!updatedCompany) {

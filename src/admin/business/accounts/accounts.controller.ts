@@ -6,7 +6,7 @@ import { CompanyStaffInfoDto } from '../dto/companystaff.info.dto';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { ResponseMessage } from '../../../custom/decorator/response.message.decorator';
 
-@Controller('accounts')
+@Controller('business/accounts')
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
@@ -14,17 +14,17 @@ export class AccountsController {
   @ApiOkResponse({ type: CompanyOwnerInfoDto })
   @ResponseMessage('Get it owner info successfully')
   async getCompanyOwnerInfo(
-    @Body() idRequestDto: IdRequestDto,
+    @Body() req: IdRequestDto,
   ): Promise<CompanyOwnerInfoDto> {
-    return this.accountsService.getCompanyOwnerInfo(idRequestDto);
+    return this.accountsService.getCompanyOwnerInfo(req);
   }
 
   @Get('staff')
-  @ApiOkResponse({ type: [CompanyStaffInfoDto] })
+  @ApiOkResponse({ type: CompanyStaffInfoDto })
   @ResponseMessage('Get it staff info successfully')
   async getCompanyStaffInfo(
-    @Body() idRequestDto: IdRequestDto,
-  ): Promise<CompanyStaffInfoDto[]> {
-    return this.accountsService.getCompanyStaffInfo(idRequestDto);
+    @Body() req: IdRequestDto,
+  ): Promise<CompanyStaffInfoDto> {
+    return this.accountsService.getCompanyStaffInfo(req);
   }
 }

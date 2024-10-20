@@ -11,6 +11,8 @@ export class UsersService {
   ) {}
 
   async getUsersSpecificData(): Promise<Partial<User>[]> {
-    return this.userModel.find({}, { Username: 1, Email: 1 }).exec();
+    return this.userModel
+      .find({ IsDeleted: false }, { Username: 1, Email: 1 })
+      .exec();
   }
 }
