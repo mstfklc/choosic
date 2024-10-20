@@ -2,24 +2,24 @@ import { Injectable } from '@nestjs/common';
 import mongoose from 'mongoose';
 import { Company } from '../../schemas/company.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { ListAllCompanyResponseDto } from './response/listAllCompanyResponse.dto';
+import { ListAllCompanyResponseDto } from './dto/response/listAllCompanyResponse.dto';
 import { SuccessResponseDto } from '../../globalDto/successResponseDto';
 import { throwApiError } from '../../custom/http.utility';
 import { CustomExceptionCode } from '../../enum/customExceptionCode.enum';
 import { ApiErrorEnum } from '../../enum/apiError.enum';
-import { CreateCompanyOwnerRequestDto } from './request/createCompanyOwnerRequest.dto';
+import { CreateCompanyOwnerRequestDto } from './dto/request/createCompanyOwnerRequest.dto';
 import * as bcrypt from 'bcrypt';
 import { CompanyOwner } from '../../schemas/companyOwner.schema';
-import { CreateCompanyRequestDto } from './request/createCompanyRequest.dto';
+import { CreateCompanyRequestDto } from './dto/request/createCompanyRequest.dto';
 import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
 import { AwsService } from '../../custom/aws/aws.service';
-import { CreateCompanyStaffRequestDto } from './request/createCompanyStaffRequest.dto';
+import { CreateCompanyStaffRequestDto } from './dto/request/createCompanyStaffRequest.dto';
 import { CompanyStaff } from '../../schemas/companyStaff.schema';
-import { UpdateCompanyOwnerRequestDto } from './request/updateCompanyOwnerRequest.dto';
-import { UpdateCompanyRequestDto } from './request/updateCompanyRequest.dto';
-import { UpdateCompanyStaffRequestDto } from './request/updateCompanyStaffRequest.dto';
+import { UpdateCompanyOwnerRequestDto } from './dto/request/updateCompanyOwnerRequest.dto';
+import { UpdateCompanyRequestDto } from './dto/request/updateCompanyRequest.dto';
+import { UpdateCompanyStaffRequestDto } from './dto/request/updateCompanyStaffRequest.dto';
 import { IdRequestDto } from '../../globalDto/idRequestDto';
-import { BusinessDetailDto } from './dto/business.detail.dto';
+import { BusinessDetailDto } from './dto/response/business.detail.dto';
 
 @Injectable()
 export class BusinessService {

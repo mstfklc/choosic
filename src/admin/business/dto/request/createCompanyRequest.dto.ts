@@ -1,98 +1,98 @@
-import { CompanyConceptEnum } from '../../../enum/companyConcept.enum';
-import { MusicCategoryEnum } from '../../../enum/musicCategory.enum';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { CompanyConceptEnum } from '../../../../enum/companyConcept.enum';
+import { MusicCategoryEnum } from '../../../../enum/musicCategory.enum';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateCompanyRequestDto {
+export class CreateCompanyRequestDto {
   @ApiProperty({
-    description: 'ID of the company',
-    example: '123456',
+    example: '60b0a4e1e3c8d3b3d0a4b4a7',
+    description: 'CompanyOwnerId',
   })
-  @IsString()
   @IsNotEmpty()
-  Id: string;
+  @IsString()
+  CompanyOwnerId: string;
   @ApiProperty({
     example: 'Company Name',
     description: 'Company Name',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  Name?: string;
+  Name: string;
   @ApiProperty({
     example: 'Description',
     description: 'Description',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  Description?: string;
+  Description: string;
   @ApiProperty({
     example: CompanyConceptEnum.Bar,
     description: 'Company Concept',
     enum: CompanyConceptEnum,
   })
-  @IsOptional()
-  Concept?: CompanyConceptEnum[];
+  @IsNotEmpty()
+  Concept: CompanyConceptEnum[];
   @ApiProperty({
     example: MusicCategoryEnum.Pop,
     description: 'MusicCategoryEnum List',
     enum: MusicCategoryEnum,
   })
-  @IsOptional()
-  MusicCategory?: MusicCategoryEnum[];
+  @IsNotEmpty()
+  MusicCategory: MusicCategoryEnum[];
   @ApiProperty({
     example: 'Address',
     description: 'Address',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  Address?: string;
+  Address: string;
   @ApiProperty({
     example: '09:00-18:00',
     description: 'Monday Work Time',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  MondayWorkTime?: string;
+  MondayWorkTime: string;
   @ApiProperty({
     example: '09:00-18:00',
     description: 'Tuesday Work Time',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  TuesdayWorkTime?: string;
+  TuesdayWorkTime: string;
   @ApiProperty({
     example: '09:00-18:00',
     description: 'Wednesday Work Time',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  WednesdayWorkTime?: string;
+  WednesdayWorkTime: string;
   @ApiProperty({
     example: '09:00-18:00',
     description: 'Thursday Work Time',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  ThursdayWorkTime?: string;
+  ThursdayWorkTime: string;
   @ApiProperty({
     example: '09:00-18:00',
     description: 'Friday Work Time',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  FridayWorkTime?: string;
+  FridayWorkTime: string;
   @ApiProperty({
     example: '09:00-18:00',
     description: 'Saturday Work Time',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  SaturdayWorkTime?: string;
+  SaturdayWorkTime: string;
   @ApiProperty({
     example: '09:00-18:00',
     description: 'Sunday Work Time',
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  SundayWorkTime?: string;
+  SundayWorkTime: string;
 }

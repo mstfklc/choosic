@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CompanyConceptEnum } from '../../../enum/companyConcept.enum';
-import { MusicCategoryEnum } from '../../../enum/musicCategory.enum';
+import { CompanyConceptEnum } from '../../../../../enum/companyConcept.enum';
+import { MusicCategoryEnum } from '../../../../../enum/musicCategory.enum';
 import { IsArray, IsEnum, IsString } from 'class-validator';
 
 export class BusinessInfoDto {

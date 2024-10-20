@@ -11,22 +11,22 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { BusinessService } from './business.service';
-import { BusinessDetailDto } from './dto/business.detail.dto';
+import { BusinessDetailDto } from './dto/response/business.detail.dto';
 import { IdRequestDto } from '../../globalDto/idRequestDto';
 import { ApiBody, ApiConsumes, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
-import { ListAllCompanyResponseDto } from './response/listAllCompanyResponse.dto';
+import { ListAllCompanyResponseDto } from './dto/response/listAllCompanyResponse.dto';
 import { SuccessResponseDto } from '../../globalDto/successResponseDto';
-import { CreateCompanyOwnerRequestDto } from './request/createCompanyOwnerRequest.dto';
-import { CreateCompanyStaffRequestDto } from './request/createCompanyStaffRequest.dto';
-import { UpdateCompanyOwnerRequestDto } from './request/updateCompanyOwnerRequest.dto';
-import { UpdateCompanyStaffRequestDto } from './request/updateCompanyStaffRequest.dto';
+import { CreateCompanyOwnerRequestDto } from './dto/request/createCompanyOwnerRequest.dto';
+import { CreateCompanyStaffRequestDto } from './dto/request/createCompanyStaffRequest.dto';
+import { UpdateCompanyOwnerRequestDto } from './dto/request/updateCompanyOwnerRequest.dto';
+import { UpdateCompanyStaffRequestDto } from './dto/request/updateCompanyStaffRequest.dto';
 import { Promise } from 'mongoose';
-import { CreateCompanyRequestDto } from './request/createCompanyRequest.dto';
+import { CreateCompanyRequestDto } from './dto/request/createCompanyRequest.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CompanyConceptEnum } from '../../enum/companyConcept.enum';
 import { MusicCategoryEnum } from '../../enum/musicCategory.enum';
-import { UpdateCompanyRequestDto } from './request/updateCompanyRequest.dto';
+import { UpdateCompanyRequestDto } from './dto/request/updateCompanyRequest.dto';
 
 @ApiTags('admin')
 @Controller('business')
