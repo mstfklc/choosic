@@ -5,7 +5,7 @@ import { Admin } from './admin.schema';
 
 @Schema({
   timestamps: true,
-  versionKey: true,
+  versionKey: false,
 })
 export class FeedbackApplication {
   _id: mongoose.Schema.Types.ObjectId;
@@ -19,8 +19,7 @@ export class FeedbackApplication {
   Title: string;
   @Prop({ required: true })
   Message: string;
-  @Prop({ required: true })
-  CurrentApplicationVersion: string;
+
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Admin',

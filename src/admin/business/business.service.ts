@@ -18,6 +18,8 @@ import { CompanyStaff } from '../../schemas/companyStaff.schema';
 import { UpdateCompanyOwnerRequestDto } from './request/updateCompanyOwnerRequest.dto';
 import { UpdateCompanyRequestDto } from './request/updateCompanyRequest.dto';
 import { UpdateCompanyStaffRequestDto } from './request/updateCompanyStaffRequest.dto';
+import { IdRequestDto } from '../../globalDto/idRequestDto';
+import { BusinessDetailDto } from './dto/business.detail.dto';
 
 @Injectable()
 export class BusinessService {
@@ -442,5 +444,27 @@ export class BusinessService {
         ApiErrorEnum.api_error_internal_server_error,
       );
     }
+  }
+  async getCompanyDetails(
+    idRequestDto: IdRequestDto,
+  ): Promise<BusinessDetailDto> {
+    const { id } = idRequestDto;
+
+    const company = await this.companyModel
+      .findOne({ _id: id, isDeleted: false })
+      .exec();
+
+    if (!company) {
+      throwApiError(
+        CustomExceptionCode.NOT_FOUND,
+        ApiErrorEnum.api_error_company_not_found,
+      );
+    }
+
+    return {
+      CompanyName: company.CompanyName,
+      CompanyImagePath: company.CompanyImagePath,
+      CreatedDate: company.CreatedAt,
+    };
   }
 }

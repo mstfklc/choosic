@@ -8,11 +8,9 @@ import { CompanyStaffSchema } from '../../schemas/companyStaff.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }]),
     MongooseModule.forFeature([
+      { name: 'Company', schema: CompanySchema },
       { name: 'CompanyOwner', schema: CompanyOwnerSchema },
-    ]),
-    MongooseModule.forFeature([
       { name: 'CompanyStaff', schema: CompanyStaffSchema },
     ]),
   ],

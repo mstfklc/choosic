@@ -19,4 +19,10 @@ export enum ApiErrorEnum {
   api_error_no_update_fields_provided = 22,
   api_error_company_staff_not_found = 23,
   api_error_failed_to_upload_files = 24,
+  api_error_company_not_updated = 25,
+  api_error_companyOwner_not_found = 26,
+  api_error_companyStaff_not_found = 27,
+  api_error_playlist_not_found = 28,
+  api_error_song_not_found = 29,
+  api_error_song_already_exist = 30,
 }
