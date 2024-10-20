@@ -1,37 +1,20 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Req } from '@nestjs/common';
 import { PlayedSongsService } from './played-songs.service';
 import { PlayedSongsRequestDto } from './dto/request/playedsongs.request.dto';
 import { PlayedsongsResponseDto } from './dto/response/playedsongs.response.dto';
-import { IdRequestDto } from '../../globalDto/idRequestDto';
+import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
+
+//import { IdRequestDto } from '../../globalDto/idRequestDto';
 
 @Controller('played-songs')
 export class PlayedSongsController {
   constructor(private readonly playedSongsService: PlayedSongsService) {}
 
-  @Get('daily')
-  getDailyHistory(@Body() request: IdRequestDto) {
-    return this.playedSongsService.getDailyHistory(request.id.toString());
-  }
-
-  @Get('weekly')
-  getWeeklyHistory(@Body() request: IdRequestDto) {
-    return this.playedSongsService.getWeeklyHistory(request.id.toString());
-  }
-
-  @Get('monthly')
-  getMonthlyHistory(@Body() request: IdRequestDto) {
-    return this.playedSongsService.getMonthlyHistory(request.id.toString());
-  }
-
-  @Get('yearly')
-  getYearlyHistory(@Body() request: IdRequestDto) {
-    return this.playedSongsService.getYearlyHistory(request.id.toString());
-  }
-
   @Get('custom-range')
   async getCustomRangeHistory(
-    @Body() request: PlayedSongsRequestDto,
+    @Req() auth: AuthRequestDto,
+    @Body() req: PlayedSongsRequestDto,
   ): Promise<PlayedsongsResponseDto[]> {
-    return this.playedSongsService.getCustomRangeHistory(request);
+    return this.playedSongsService.getCustomRangeHistory(auth, req);
   }
 }

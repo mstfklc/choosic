@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PlayedsongsResponseDto } from './dto/response/playedsongs.response.dto';
 import { PlayedSongsRequestDto } from './dto/request/playedsongs.request.dto';
+import { AuthRequestDto } from '../../custom/jwt/dto/auth.request.dto';
 
 @Injectable()
 export class PlayedSongsService {
@@ -31,59 +32,8 @@ export class PlayedSongsService {
     },
   ];
 
-  async getDailyHistory(companyId: string): Promise<PlayedsongsResponseDto[]> {
-    const today = new Date();
-    const filteredSongs = this.musicHistory.filter(
-      (music) =>
-        music.companyId === companyId &&
-        music.playedAt.toDateString() === today.toDateString(),
-    );
-
-    return this.mapToDto(filteredSongs);
-  }
-
-  async getWeeklyHistory(companyId: string): Promise<PlayedsongsResponseDto[]> {
-    const today = new Date();
-    const oneWeekAgo = new Date(today.setDate(today.getDate() - 7));
-    const filteredSongs = this.musicHistory.filter(
-      (music) =>
-        music.companyId === companyId &&
-        music.playedAt > oneWeekAgo &&
-        music.playedAt <= new Date(),
-    );
-
-    return this.mapToDto(filteredSongs);
-  }
-
-  async getMonthlyHistory(
-    companyId: string,
-  ): Promise<PlayedsongsResponseDto[]> {
-    const today = new Date();
-    const oneMonthAgo = new Date(today.setMonth(today.getMonth() - 1));
-    const filteredSongs = this.musicHistory.filter(
-      (music) =>
-        music.companyId === companyId &&
-        music.playedAt > oneMonthAgo &&
-        music.playedAt <= new Date(),
-    );
-
-    return this.mapToDto(filteredSongs);
-  }
-
-  async getYearlyHistory(companyId: string): Promise<PlayedsongsResponseDto[]> {
-    const today = new Date();
-    const oneYearAgo = new Date(today.setFullYear(today.getFullYear() - 1));
-    const filteredSongs = this.musicHistory.filter(
-      (music) =>
-        music.companyId === companyId &&
-        music.playedAt > oneYearAgo &&
-        music.playedAt <= new Date(),
-    );
-
-    return this.mapToDto(filteredSongs);
-  }
-
   async getCustomRangeHistory(
+    auth: AuthRequestDto,
     req: PlayedSongsRequestDto,
   ): Promise<PlayedsongsResponseDto[]> {
     const { companyId, startDate, endDate } = req;
