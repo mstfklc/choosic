@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { throwApiError } from '../../http.utility';
 import { CustomExceptionCode } from '../../../enum/customExceptionCode.enum';
@@ -21,9 +21,11 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload) {
-    const { id } = payload;
-
-    const user = await this.userModel.findOne({ _id: id, IsDeleted: false });
+    const { sub } = payload;
+    const user = await this.userModel.findOne({
+      _id: sub,
+      IsDeleted: false,
+    });
 
     if (!user) {
       throwApiError(

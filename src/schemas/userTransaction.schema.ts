@@ -10,6 +10,7 @@ export type UserTransactionDocument = UserTransaction & Document;
   versionKey: false,
 })
 export class UserTransaction {
+  _id: mongoose.Schema.Types.ObjectId;
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -24,8 +25,8 @@ export class UserTransaction {
   CompanyId: Company;
   @Prop({ required: true })
   Price: number;
-  @Prop({ default: new Date() })
-  CreatedDate: Date;
+  @Prop({ default: Date.now })
+  CreatedAt: Date;
   @Prop({ default: true })
   IsCompleted: boolean;
 }

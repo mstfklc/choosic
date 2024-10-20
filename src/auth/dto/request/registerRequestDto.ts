@@ -8,35 +8,35 @@ export class RegisterRequestDto {
     required: true,
   })
   @IsString()
-  username: string;
+  Username: string;
   @ApiProperty({
     description: 'User email address',
     example: 'test@gmail.com',
     required: true,
   })
   @IsEmail()
-  email: string;
+  Email: string;
   @ApiProperty({
     description: 'User password',
     example: 'testSuperAdmin',
     required: true,
   })
   @IsString()
-  password: string;
+  Password: string;
   @ApiProperty({
     description: 'User name',
     example: 'Batu',
     required: true,
   })
   @IsString()
-  name: string;
+  Name: string;
   @ApiProperty({
     description: 'User surname',
     example: 'Kaya',
     required: true,
   })
   @IsString()
-  surname: string;
+  Surname: string;
   @ApiProperty({
     description: 'Phone number of the super index',
     example: '+905321234567',
@@ -44,11 +44,11 @@ export class RegisterRequestDto {
     type: String,
   })
   @Length(13, 13)
-  phone: string;
+  Phone: string;
   @ApiProperty({
     description: 'User agreement acceptance',
     example: 'true',
     required: true,
   })
-  agreementAcceptance: boolean;
+  AgreementAcceptance: boolean;
 }

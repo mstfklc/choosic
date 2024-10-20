@@ -12,7 +12,7 @@ export class AuthController {
 
   @Post('/register')
   register(@Body() req: RegisterRequestDto): Promise<LoginResponseDto> {
-    return this.authService.registerAdmin(req);
+    return this.authService.registerUser(req);
   }
 
   @Post('/login-admin')

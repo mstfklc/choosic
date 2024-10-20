@@ -19,7 +19,7 @@ export class RolesGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
+    const requiredRoles = this.reflector.getAllAndOverride<Role>(ROLES_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
@@ -42,7 +42,7 @@ export class RolesGuard implements CanActivate {
       return false;
     }
 
-    const hasRole = requiredRoles.some((role) => dbUser.Roles.includes(role));
+    const hasRole = dbUser.Roles.includes(requiredRoles);
     this.logger.debug(`User roles: ${JSON.stringify(dbUser.Roles)}`);
     this.logger.debug(`Has required role: ${hasRole}`);
 

@@ -4,7 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { User } from '../../../schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { throwApiError } from '../../http.utility';
 import { CustomExceptionCode } from '../../../enum/customExceptionCode.enum';
 import { ApiErrorEnum } from '../../../enum/apiError.enum';
@@ -27,9 +27,9 @@ export class RefreshTokenStrategy extends PassportStrategy(
 
   async validate(req: Request, payload: any) {
     const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
-
+    const { sub } = payload;
     const user = await this.userModel.findOne({
-      _id: payload.id,
+      _id: sub,
       refreshTokens: refreshToken,
     });
 

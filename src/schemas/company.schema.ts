@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { MusicCategoryEnum } from '../enum/musicCategory.enum';
 import { CompanyConceptEnum } from '../enum/companyConcept.enum';
+import { CompanyOwner } from './companyOwner.schema';
 
 export type CompanyDocument = Company & Document;
 
@@ -10,13 +11,14 @@ export type CompanyDocument = Company & Document;
   versionKey: false,
 })
 export class Company {
-  /*@Prop({
+  _id: mongoose.Schema.Types.ObjectId;
+  @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'CompanyOwner',
-    required: true,
+    required: false,
   })
-  CompanyOwnerId: CompanyOwner;*/
-  @Prop({ required: true })
+  CompanyOwnerId: CompanyOwner;
+  @Prop({ required: true, index: true })
   CompanyName: string;
   @Prop({ required: false })
   Description: string;
@@ -27,7 +29,7 @@ export class Company {
   @Prop({ required: false })
   Address: string;
   @Prop({ required: false })
-  CompanyImagePath: [string];
+  CompanyImagePath: string[];
   @Prop({ required: false })
   MondayWorkTime: string;
   @Prop({ required: false })
@@ -57,3 +59,4 @@ export class Company {
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
+CompanySchema.index({ CompanyName: 'text' });
