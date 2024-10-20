@@ -396,6 +396,94 @@ export class BusinessService {
     }
   }
 
+  async updateCompanyImage(
+    auth: AuthRequestDto,
+    req: IdRequestDto,
+    companyImage?: Express.Multer.File,
+    companyImage1?: Express.Multer.File,
+    companyImage2?: Express.Multer.File,
+    companyImage3?: Express.Multer.File,
+    companyImage4?: Express.Multer.File,
+  ): Promise<SuccessResponseDto> {
+    try {
+      const companyId = await this.companyModel.findOne({
+        _id: req.id,
+        IsDeleted: false,
+      });
+      const companyImagePaths = [];
+
+      if (companyImage) {
+        const companyImageFileExtension = companyImage.originalname
+          .split('.')
+          .pop();
+        const companyImageFileName = `company/images/${companyId.CompanyOwnerId}/${companyId._id}/${Date.now()}.${companyImageFileExtension}`;
+        const frontUploadResult = await this.awsService.uploadSingleFile({
+          dataBuffer: companyImage.buffer,
+          filename: companyImageFileName,
+        });
+        companyImagePaths[0] = frontUploadResult.Location;
+      }
+      if (companyImage1) {
+        const companyImage1FileExtension = companyImage1.originalname
+          .split('.')
+          .pop();
+        const companyImage1FileName = `company/images/${companyId.CompanyOwnerId}/${companyId._id}/${Date.now()}.${companyImage1FileExtension}`;
+        const backUploadResult = await this.awsService.uploadSingleFile({
+          dataBuffer: companyImage1.buffer,
+          filename: companyImage1FileName,
+        });
+        companyImagePaths[1] = backUploadResult.Location;
+      }
+      if (companyImage2) {
+        const companyImage2FileExtension = companyImage2.originalname
+          .split('.')
+          .pop();
+        const companyImage2FileName = `company/images/${companyId.CompanyOwnerId}/${companyId._id}/${Date.now()}.${companyImage2FileExtension}`;
+        const rightUploadResult = await this.awsService.uploadSingleFile({
+          dataBuffer: companyImage2.buffer,
+          filename: companyImage2FileName,
+        });
+        companyImagePaths[2] = rightUploadResult.Location;
+      }
+      if (companyImage3) {
+        const companyImage3FileExtension = companyImage3.originalname
+          .split('.')
+          .pop();
+        const companyImage3FileName = `company/images/${companyId.CompanyOwnerId}/${companyId._id}/${Date.now()}.${companyImage3FileExtension}`;
+        const leftUploadResult = await this.awsService.uploadSingleFile({
+          dataBuffer: companyImage3.buffer,
+          filename: companyImage3FileName,
+        });
+        companyImagePaths[3] = leftUploadResult.Location;
+      }
+      if (companyImage4) {
+        const companyImage4FileExtension = companyImage4.originalname
+          .split('.')
+          .pop();
+        const companyImage4FileName = `company/images/${companyId.CompanyOwnerId}/${companyId._id}/${Date.now()}.${companyImage4FileExtension}`;
+        const insideUploadResult = await this.awsService.uploadSingleFile({
+          dataBuffer: companyImage4.buffer,
+          filename: companyImage4FileName,
+        });
+        companyImagePaths[4] = insideUploadResult.Location;
+      }
+
+      await this.companyModel.updateOne(
+        { _id: req.id },
+        {
+          CompanyImagePath: [...companyImagePaths],
+        },
+      );
+
+      return { status: true };
+    } catch (error) {
+      throwApiError(
+        CustomExceptionCode.INTERNAL_SERVER_ERROR,
+        ApiErrorEnum.api_error_internal_server_error,
+      );
+    }
+  }
+
   //SRS-0292-0299
   async updateCompanyStaff(
     auth: AuthRequestDto,
