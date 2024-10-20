@@ -36,12 +36,12 @@ export class BusinessService {
   //SRS-0256
   async listAllCompany(
     auth: AuthRequestDto,
-    CompanyName?: string,
+    companyName?: string,
   ): Promise<ListAllCompanyResponseDto> {
     try {
       const query: any = { IsDeleted: false };
-      if (CompanyName) {
-        query.CompanyName = { $regex: CompanyName, $options: 'i' };
+      if (companyName) {
+        query.CompanyName = { $regex: companyName, $options: 'i' };
       }
       const companies = await this.companyModel
         .find(query)
@@ -68,17 +68,17 @@ export class BusinessService {
   //SRS-0260
   async deleteCompany(
     auth: AuthRequestDto,
-    id: string,
+    req: IdRequestDto,
   ): Promise<SuccessResponseDto> {
     try {
-      const company = await this.companyModel.findOne({ _id: id });
+      const company = await this.companyModel.findOne({ _id: req.id });
       if (!company) {
         throwApiError(
           CustomExceptionCode.NOT_FOUND,
           ApiErrorEnum.api_error_company_not_found,
         );
       }
-      await this.companyModel.updateOne({ _id: id }, { IsDeleted: true });
+      await this.companyModel.updateOne({ _id: req.id }, { IsDeleted: true });
       return { status: true };
     } catch (error) {
       throwApiError(
@@ -445,13 +445,13 @@ export class BusinessService {
       );
     }
   }
-  async getCompanyDetails(
-    idRequestDto: IdRequestDto,
-  ): Promise<BusinessDetailDto> {
-    const { id } = idRequestDto;
 
+  async getCompanyDetails(
+    auth: AuthRequestDto,
+    req: IdRequestDto,
+  ): Promise<BusinessDetailDto> {
     const company = await this.companyModel
-      .findOne({ _id: id, isDeleted: false })
+      .findOne({ _id: req.id, isDeleted: false })
       .exec();
 
     if (!company) {
