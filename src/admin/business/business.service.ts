@@ -445,13 +445,13 @@ export class BusinessService {
       );
     }
   }
-  async getCompanyDetails(
-    idRequestDto: IdRequestDto,
-  ): Promise<BusinessDetailDto> {
-    const { id } = idRequestDto;
 
+  async getCompanyDetails(
+    auth: AuthRequestDto,
+    req: IdRequestDto,
+  ): Promise<BusinessDetailDto> {
     const company = await this.companyModel
-      .findOne({ _id: id, isDeleted: false })
+      .findOne({ _id: req.id, isDeleted: false })
       .exec();
 
     if (!company) {
