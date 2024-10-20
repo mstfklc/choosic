@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 import { Role } from '../enum/role.enum';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
@@ -9,7 +9,6 @@ export type UserDocument = User & Document;
   versionKey: false,
 })
 export class User {
-  _id: mongoose.Schema.Types.ObjectId;
   @Prop({ required: true })
   Username: string;
   @Prop({ required: true })
@@ -26,9 +25,9 @@ export class User {
     required: true,
     default: Role.User,
   })
-  Roles: Role;
-  @Prop({ default: Date.now })
-  CreatedAt: Date;
+  Role: Role;
+  @Prop({ default: new Date() })
+  CreatedDate: Date;
   @Prop({ required: true })
   AgreementAcceptance: boolean;
   @Prop({ default: false })
